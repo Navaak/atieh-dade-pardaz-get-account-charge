@@ -1,4 +1,4 @@
-# ### This script checks Atieh balance amount. you should add a config.py file that has json form of below configs. If the balance amount is less than config.charge_amount, it will send an text message to config.mobile_number1.
+# ### This script checks Atieh balance amount. you should add a config.py file that has json form of below configs. If the balance amount is less than config.charge_warning_amount, it will send an text message to config.mobile_number1.
 # If the balance is less than config_charge_critical_amount it will send text message to 2 mobile numbers. 
 
 import requests, datetime, logging, os
@@ -13,7 +13,7 @@ day          = now.strftime("%Y-%m-%d")
 critical_daily_sent_sms_limit = 20
 daily_sent_sms_limit   = 4
 charge_critical_amount = int(config.charge_critical_amount)
-charge_amount          = int(config.charge_amount)
+charge_warning_amount          = int(config.charge_warning_amount)
 mobile_number1         = config.mobile_number_list[0]
 mobile_number2         = config.mobile_number_list[1]
 mobile_number3         = config.mobile_number_list[2]
@@ -57,7 +57,7 @@ current_charge = get_currrent_charge(username, password)
 
 
 
-if current_charge > charge_amount:
+if current_charge > charge_warning_amount:
     exit()
 
 
@@ -71,7 +71,7 @@ if current_charge > charge_critical_amount:
 
         ### tuye file benevisam       
         with open( logfile , 'a') as the_file:
-            the_file.write("message sent\n", current_time)
+            the_file.write("message sent\n, {}".format(current_time))
             print(logfile)
 
     else:
@@ -91,7 +91,7 @@ if current_charge < charge_critical_amount:
 
     ### tuye file benevisam       
         with open( logfile , 'a') as the_file:
-            the_file.write("message sent\n", current_time)
+            the_file.write("message sent\n,  {}".format(current_time))
        
     else:
         print("you passed limit")
