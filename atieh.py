@@ -13,7 +13,7 @@ day          = now.strftime("%Y-%m-%d")
 critical_daily_sent_sms_limit = 20
 daily_sent_sms_limit   = 4
 charge_critical_amount = int(config.charge_critical_amount)
-charge_warning_amount          = int(config.charge_warning_amount)
+charge_warning_amount  = int(config.charge_warning_amount)
 mobile_number1         = config.mobile_number_list[0]
 mobile_number2         = config.mobile_number_list[1]
 mobile_number3         = config.mobile_number_list[2]
@@ -94,4 +94,4 @@ if current_charge < charge_critical_amount:
             the_file.write("message sent\n,  {}".format(current_time))
        
     else:
-        print("you passed limit")
+        print("you passed the limit")
