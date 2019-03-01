@@ -1,9 +1,10 @@
 # ### This script checks Atieh balance amount. you should add a config.py file that has json form of below configs. If the balance amount is less than config.charge_amount, it will send an text message to config.mobile_number1.
 # If the balance is less than config_charge_critical_amount it will send text message to 2 mobile numbers. 
 
-
 import requests, datetime, logging, os
 import config
+
+
 
 now          = datetime.datetime.now()
 current_time = now.strftime("%Y-%m-%d %H:%M")
@@ -53,41 +54,44 @@ def get_currrent_charge(Username, Password):
 
 current_charge = get_currrent_charge(username, password)
 
-if current_charge < charge_amount:
-
-    if current_charge > charge_critical_amount:
-        
-        if sent_messages_count < daily_sent_sms_limit:
-
-            send_message(username, password, srcaddress , mobile_number1 , current_charge)
-           
-            terminal_logger(current_charge, mobile_number1, current_time)
-
-            ### tuye file benevisam       
-            with open( logfile , 'a') as the_file:
-                the_file.write("message sent\n")
-                print(logfile)
-
-        else:
-            print("you passed the limit.")
 
 
-    if current_charge < charge_critical_amount:
-        
-        if sent_messages_count < critical_daily_sent_sms_limit:    
-        
-            send_message(username, password, srcaddress , mobile_number1 , current_charge)
-            send_message(username, password, srcaddress , mobile_number2 , current_charge)
+
+if current_charge > charge_amount:
+    exit()
 
 
-            terminal_logger(current_charge, mobile_number1, current_time)
-            terminal_logger(current_charge, mobile_number2, current_time)
+if current_charge > charge_critical_amount:
+    
+    if sent_messages_count < daily_sent_sms_limit:
+
+        send_message(username, password, srcaddress , mobile_number1 , current_charge)
+       
+        terminal_logger(current_charge, mobile_number1, current_time)
 
         ### tuye file benevisam       
-            with open( logfile , 'a') as the_file:
-                the_file.write("message sent\n")
-           
-        else:
-            print("you passed limit")
+        with open( logfile , 'a') as the_file:
+            the_file.write("message sent\n", current_time)
+            print(logfile)
 
-exit()
+    else:
+        print("you passed the limit.")
+
+
+if current_charge < charge_critical_amount:
+    
+    if sent_messages_count < critical_daily_sent_sms_limit:    
+    
+        send_message(username, password, srcaddress , mobile_number1 , current_charge)
+        send_message(username, password, srcaddress , mobile_number2 , current_charge)
+
+
+        terminal_logger(current_charge, mobile_number1, current_time)
+        terminal_logger(current_charge, mobile_number2, current_time)
+
+    ### tuye file benevisam       
+        with open( logfile , 'a') as the_file:
+            the_file.write("message sent\n", current_time)
+       
+    else:
+        print("you passed limit")
