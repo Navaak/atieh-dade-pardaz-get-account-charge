@@ -10,8 +10,8 @@ now          = datetime.datetime.now()
 current_time = now.strftime("%Y-%m-%d %H:%M")
 day          = now.strftime("%Y-%m-%d")
 
-critical_daily_sent_sms_limit = 20
-daily_sent_sms_limit   = 4
+critical_daily_sent_sms_limit = 4
+daily_sent_sms_limit   = 2
 charge_critical_amount = int(config.charge_critical_amount)
 charge_warning_amount  = int(config.charge_warning_amount)
 mobile_number1         = config.mobile_number_list[0]
